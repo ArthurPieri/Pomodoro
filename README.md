@@ -1,5 +1,9 @@
 # Pomodoro
 
+## Branch explanation
+
+This branch only keeps the first version of the app. For more recent please check the default branch on github
+
 ## Installing
 
 1. Clone the Repo
@@ -8,18 +12,15 @@
     ```sh
     $ npm install
     ```
-4. To start the pomodoro-CLI run:
+4. To start the pomodoro run:
     ```sh
     $ npm start
     ```
-5. With you want a CLI command to be installed globaly:
-    ```sh
-    $ npm install -g
-    ```
+    and the command you want like: 'Start'
 
 ## To do:
 
-- [x] Test the timer MVP
+- [x] Test the timer [MVP] ()
 - [ ] Create a CLI
 - [ ] Create Users
 - [ ] Use Mongo

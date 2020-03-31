@@ -17,33 +17,24 @@ let timer = {
     nIntervals: 4,
     construct: function () {
         try{
-            const configJSON = fs.readFileSync('./src/config.json')
-            const config = JSON.parse(configJSON)
-
-            console.log
-
-            this.time = ((config.wtime)*60)
-            this.workTime = ((config.wtime)*60)
-            this.lbTime = ((config.lbtime)*60)
-            this.sbTime = ((config.sbtime)*60)
-            this.nIntervals = config.nIntervals
+            const configJSON = fs.readFileSync('config.json')
+            const config = JSON.parse(configJSON)    
+        
+            this.time = ((config.worktime)*60)
+            this.workTime = ((config.worktime)*60)
+            this.lbTime = ((config.longbreak)*60)
+            this.sbTime = ((config.shortbreak)*60)
         }catch(e){
-            console.log(e)
+            return []
         }
     },
-    startTimer: function (){
+    startTimer: async function (){
         console.log('Trabalhe')
         this.time = this.workTime
-        
-        console.log(this.time)
-
         this.interval = setInterval(() => {
+            console.log(this.time)
             this.time--
         
-            if(this.time < 10 && this.time > 0){
-                console.log(this.time)
-            }
-
             if(this.time < 0 ){        
                 clearInterval(this.interval)
                 console.log('Ding!')
@@ -51,24 +42,19 @@ let timer = {
             }
         }, 1000)
     },
-    stopTimer: function (){
+    stopTimer: async function (){
         clearInterval(this.interval)
-        console.log('Pedir pra parar, Parou')
+        console.log('Parou')
     },
     resetTimer: function (){
         this.time = this.workTime
     },
-    longBreak: function (){
+    longBreak: async function (){
         console.log('Pausa grande')
-        this.repetitions = 0
         this.time = this.lbTime
-        console.log(this.time)
         this.interval = setInterval(() => {
+            console.log(this.time)
             this.time--
-
-            if(this.time < 10 && this.time > 0){
-                console.log(this.time)
-            }
 
             if(this.time < 0){
                 clearInterval(this.interval)
@@ -76,7 +62,7 @@ let timer = {
             }
         }, 1000)
     },
-    shortBreak: function (){
+    shortBreak: async function (){
         console.log('Pausa Curta')
         this.time = this.sbTime
         this.interval = setInterval(() => {
@@ -89,12 +75,12 @@ let timer = {
             }
         }, 1000)
     },
-    configTimer: function(obj){
+    configTimer: async function(obj){
         try{
             const objJson = JSON.stringify(obj)
-            fs.writeFileSync('./src/config.json', objJson)
+            fs.writeFileSync('config.json', objJson)
         }catch (e){
-            console.log(e)
+            return []
         }
     }
 }
