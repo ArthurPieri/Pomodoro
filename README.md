@@ -20,8 +20,8 @@ This branch only keeps the first version of the app. For more recent please chec
 
 ## To do:
 
-- [x] Test the timer [MVP] ()
-- [ ] Create a CLI
+- [x] Test the timer [MVP](https://github.com/ArthurPieri/Pomodoro/tree/basic)
+- [ ] Create a [CLI](https://github.com/ArthurPieri/Pomodoro/tree/cli)
 - [ ] Create Users
 - [ ] Use Mongo
 - [ ] Create a Webserver
