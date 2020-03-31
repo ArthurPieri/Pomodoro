@@ -1,21 +1,14 @@
 const fs = require('fs')
 
-let timer = {
-    // Armazena a promessa do setInterval
-    interval: {},
-    // Utilizada para fazer a contagem regressiva
-    time: (25*60),
-    // Armazena quantos segundos a cada ciclo de trabalho
-    workTime: (25*60),
-    // Armazena quantos segundos de Pausa grande
-    lbTime: (25*20),
-    // Armazena quantos segundos de Pausa curta
-    sbTime: (5*60),
-    // Armazena quantas repetições aconteceram
-    repetitions: 0,
-    // Armazena quantos intervalos para rolar uma pausa grande
-    nIntervals: 4,
-    construct: function () {
+class timer {
+    constructor(){
+        let interval = {}
+        let time = (25*60)
+        let workTime = (25*60)
+        let lbTime = (25*20)
+        let sbTime = (5*60)
+        let repetitions = 0
+        let nIntervals = 4
         try{
             const configJSON = fs.readFileSync('./src/config.json')
             const config = JSON.parse(configJSON)
@@ -30,8 +23,8 @@ let timer = {
         }catch(e){
             console.log(e)
         }
-    },
-    startTimer: function (){
+    }
+    startTimer(){
         console.log('Trabalhe')
         this.time = this.workTime
         
@@ -50,15 +43,16 @@ let timer = {
                 this.repetitions++
             }
         }, 1000)
-    },
-    stopTimer: function (){
+    }
+    stopTimer(){
         clearInterval(this.interval)
-        console.log('Pedir pra parar, Parou')
-    },
-    resetTimer: function (){
+        console.log('Pedi pra parar, Parou')
+        console.log(this.time)
+    }
+    resetTimer(){
         this.time = this.workTime
-    },
-    longBreak: function (){
+    }
+    longBreak(){
         console.log('Pausa grande')
         this.repetitions = 0
         this.time = this.lbTime
@@ -75,8 +69,8 @@ let timer = {
                 console.log('Volte ao trabalho')
             }
         }, 1000)
-    },
-    shortBreak: function (){
+    }
+    shortBreak(){
         console.log('Pausa Curta')
         this.time = this.sbTime
         this.interval = setInterval(() => {
@@ -88,14 +82,17 @@ let timer = {
                 console.log('Volte ao trabalho')
             }
         }, 1000)
-    },
-    configTimer: function(obj){
+    }
+    configTimer(obj){
         try{
             const objJson = JSON.stringify(obj)
             fs.writeFileSync('./src/config.json', objJson)
         }catch (e){
             console.log(e)
         }
+    }
+    remainingTime(){
+        console.log(this.time)
     }
 }
 

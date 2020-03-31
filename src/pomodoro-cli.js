@@ -4,9 +4,7 @@ const program = require('commander')
 const inquirer = require('inquirer')
 const Timer = require('./timer')
 
-let timer = Timer
-timer.construct()
-
+let timer = new Timer
 program
     .version('0.0.1')
     .parse(process.argv)
@@ -66,33 +64,34 @@ function ask(){
             case 'config':
                 inquirer.prompt(config).then(answers => {
                     timer.configTimer(answers)
-                    timer.workTime = answers.wtime
-                    timer.lbTime = answers.lbtime
-                    timer.sbTime = answers.sbtime
-                    timer.nIntervals = answers.nIntervals
+                    timer.workTime = ((answers.wtime)*60)
+                    timer.lbTime = ((answers.lbtime)*60)
+                    timer.sbTime = ((answers.sbtime)*60)
+                    timer.nIntervals = ((answers.nIntervals)*60)
                     ask()
                 })
                 break
             case 'quit':
-                console.log('Vazante')
+                console.log('Stopping Timer and quiting')
+                console.log(timer.time)
                 timer.stopTimer()
                 break
-            case 'ajuda':
-                console.log('Para começar a usar seu pomodoro digite: start')
+            case 'help':
+                console.log('To start using your pomodoro type: start')
                 ask()
                 break
-            case 'renegados':
-                console.log('Aqui não há debiloides')
+            case 'remaining':
+                timer.remainingTime()
                 ask()
                 break
             default:
-                console.log('Opção não reconhecida, tente uma das seguintes: \n'
+                console.log('Not recognized, Try the following: \n'
                 + '----------' + '----------' + '----------\n'
                 + '| Start | ' + 'Stop   | '  + 'Reset     |\n'
                 + '----------' + '----------' + '----------\n'
                 + '| Long  | ' + 'Short  | '  + 'Config    |\n'
                 + '----------' + '----------' + '----------\n'
-                + '| Quit  | ' + 'Ajuda  | '  + 'Renegados |\n'
+                + '| Quit  | ' + 'Help  | '  + 'Remaining |\n'
                 + '----------' + '--------'   + '-----------' )
                 ask()
             }

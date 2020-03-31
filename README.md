@@ -2,6 +2,7 @@
 
 ## Installing
 
+0. Install node (I recommend using [NVM](https://github.com/nvm-sh/nvm))
 1. Clone the Repo
 2. Browse to the Pomodoro folder
 3. Install applicatication by running: 
