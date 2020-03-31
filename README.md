@@ -19,7 +19,7 @@
 
 ## To do:
 
-- [x] Test the timer mpv
+- [x] Test the timer MVP
 - [ ] Create a CLI
 - [ ] Create Users
 - [ ] Use Mongo
