@@ -17,7 +17,7 @@ let timer = {
     nIntervals: 4,
     construct: function () {
         try{
-            const configJSON = fs.readFileSync('config.json')
+            const configJSON = fs.readFileSync('./src/config.json')
             const config = JSON.parse(configJSON)
 
             console.log
@@ -92,7 +92,7 @@ let timer = {
     configTimer: function(obj){
         try{
             const objJson = JSON.stringify(obj)
-            fs.writeFileSync('config.json', objJson)
+            fs.writeFileSync('./src/config.json', objJson)
         }catch (e){
             console.log(e)
         }
