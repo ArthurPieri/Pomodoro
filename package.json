@@ -1,0 +1,30 @@
+{
+  "name": "pomodoro-cli",
+  "version": "0.0.1",
+  "description": "A command line interface pomodoro",
+  "main": "src/pomodoro-cli.js",
+  "bin": {
+    "pomodoro-cli": "./src/pomodoro-cli.js"
+  },
+  "dependencies": {
+    "commander": "^5.0.0",
+    "fs": "0.0.1-security",
+    "inquirer": "^7.1.0",
+    "yargs": "^15.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node src/pomodoro-cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurPieri/Pomodoro.git"
+  },
+  "author": "Arthur Pieri",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArthurPieri/Pomodoro/issues"
+  },
+  "homepage": "https://github.com/ArthurPieri/Pomodoro#readme"
+}
