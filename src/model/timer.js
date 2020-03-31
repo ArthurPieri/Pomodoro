@@ -1,19 +1,34 @@
+const fs = require('fs')
+
 let timer = {
     // Armazena a promessa do setInterval
     interval: {},
     // Utilizada para fazer a contagem regressiva
-    time: 3,
+    time: (25*60),
     // Armazena quantos segundos a cada ciclo de trabalho
-    workTime: 3,
+    workTime: (25*60),
     // Armazena quantos segundos de Pausa grande
-    lbTime: 5,
+    lbTime: (25*20),
     // Armazena quantos segundos de Pausa curta
-    sbTime: 2,
+    sbTime: (5*60),
     // Armazena quantas repetições aconteceram
     repetitions: 0,
     // Armazena quantos intervalos para rolar uma pausa grande
     nIntervals: 4,
-    startTimer: function (){
+    construct: function () {
+        try{
+            const configJSON = fs.readFileSync('config.json')
+            const config = JSON.parse(configJSON)    
+        
+            this.time = ((config.worktime)*60)
+            this.workTime = ((config.worktime)*60)
+            this.lbTime = ((config.longbreak)*60)
+            this.sbTime = ((config.shortbreak)*60)
+        }catch(e){
+            return []
+        }
+    },
+    startTimer: async function (){
         console.log('Trabalhe')
         this.time = this.workTime
         this.interval = setInterval(() => {
@@ -27,14 +42,14 @@ let timer = {
             }
         }, 1000)
     },
-    stopTimer: function (){
+    stopTimer: async function (){
         clearInterval(this.interval)
         console.log('Parou')
     },
     resetTimer: function (){
         this.time = this.workTime
     },
-    longBreak: function (){
+    longBreak: async function (){
         console.log('Pausa grande')
         this.time = this.lbTime
         this.interval = setInterval(() => {
@@ -47,7 +62,7 @@ let timer = {
             }
         }, 1000)
     },
-    shortBreak: function (){
+    shortBreak: async function (){
         console.log('Pausa Curta')
         this.time = this.sbTime
         this.interval = setInterval(() => {
@@ -60,14 +75,13 @@ let timer = {
             }
         }, 1000)
     },
-    setWorkTime: function(minutes){
-        this.workTime = (minutes * 60)
-    },
-    setLongBreak: function (minutes){
-        this.lbTime = (minutes * 60)
-    },
-    setShortBreak: function (minutes){
-        this.sbTime = (minutes * 60)
+    configTimer: async function(obj){
+        try{
+            const objJson = JSON.stringify(obj)
+            fs.writeFileSync('config.json', objJson)
+        }catch (e){
+            return []
+        }
     }
 }
 

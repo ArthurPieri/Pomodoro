@@ -1,14 +1,10 @@
 let Timer = require('./model/timer')
 let yargs = require('yargs')
+let vYargs = require('./yargsconfig/variables')
 
 let timer = Timer
-
-const yargsTime = {
-    describe: 'Define the time for the function',
-    demandOption: true,
-    type: 'number',
-    alias: 't'
-}
+timer.construct()
+//console.log(timer)
 
 yargs.command({
     command: 'start',
@@ -35,12 +31,14 @@ yargs.command({
 })
 
 yargs.command({
-    command: 'setwt',
+    command: 'config',
     describe: 'Set the worktime',
     builder: {
-        time: yargsTime
+        worktime: vYargs.WorkTime,
+        longbreak: vYargs.LongBreakTime,
+        shortbreak: vYargs.ShortBreakTime
     },
-    handler: (argv) => timer.setWorkTime(argv.time) 
+    handler: (argv) => timer.configTimer(argv)
 })
 
 yargs.parse()
