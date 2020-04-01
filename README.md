@@ -13,7 +13,7 @@
     ```sh
     $ npm start
     ```
-5. With you want a CLI command to be installed globaly:
+5. If you want a CLI command to be installed globaly:
     ```sh
     $ npm install -g
     ```
