@@ -12,7 +12,7 @@ class timer extends Emitter {
         let repetitions = 0
         let nIntervals = 4
         try{
-            const configJSON = fs.readFileSync('./src/config.json')
+            const configJSON = fs.readFileSync('./src/config/config.json')
             const config = JSON.parse(configJSON)
 
             this.time = ((config.wtime)*60)
@@ -93,7 +93,7 @@ class timer extends Emitter {
     configTimer(obj){
         try{
             const objJson = JSON.stringify(obj)
-            fs.writeFileSync('./src/config.json', objJson)
+            fs.writeFileSync('./src/config/config.json', objJson)
         }catch (e){
             console.log(e)
         }

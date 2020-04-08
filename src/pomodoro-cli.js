@@ -85,7 +85,6 @@ function ask(){
                 break
             case 'quit':
                 console.log('Stopping Timer and quiting')
-                console.log(timer.time)
                 timer.stopTimer()
                 break
             case 'help':
