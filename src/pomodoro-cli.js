@@ -7,7 +7,7 @@ const Timer = require('./timer.class')
 let timer = new Timer
 
 program
-    .version('0.0.1')
+    .version('0.1.0')
     .parse(process.argv)
 
 let questions = [
@@ -84,7 +84,7 @@ function ask(){
                 })
                 break
             case 'quit':
-                console.log('Stopping Timer and quiting')
+                console.log('\nStopping Timer and quiting')
                 timer.stopTimer()
                 break
             case 'help':

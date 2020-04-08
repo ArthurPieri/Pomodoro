@@ -32,7 +32,7 @@ class timer extends Emitter {
         this.time = this.workTime
         this.opt = 'st'
 
-        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
+        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')} \n`)
 
         this.interval = setInterval(() => {
             this.time--
