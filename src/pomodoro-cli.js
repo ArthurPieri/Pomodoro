@@ -2,9 +2,10 @@
 
 const program = require('commander')
 const inquirer = require('inquirer')
-const Timer = require('./timer')
+const Timer = require('./timer.class')
 
 let timer = new Timer
+
 program
     .version('0.0.1')
     .parse(process.argv)
@@ -40,6 +41,15 @@ let config = [
 function ask(){
     inquirer.prompt(questions)
     .then(answers => {
+        timer.on('shortBreak', () => {
+            timer.shortBreak()
+        })
+        timer.on('work', () => {
+            timer.startTimer()
+        })
+        timer.on('longBreak', () => {
+            timer.longBreak()
+        })
         switch(answers.input.toLowerCase()){
             case 'start':
                 timer.startTimer()
@@ -81,6 +91,10 @@ function ask(){
                 ask()
                 break
             case 'remaining':
+                timer.remainingTime()
+                ask()
+                break
+            case 'r':
                 timer.remainingTime()
                 ask()
                 break

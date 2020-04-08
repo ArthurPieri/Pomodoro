@@ -1,7 +1,9 @@
+const Emitter = require('events')
 const fs = require('fs')
 
-class timer {
+class timer extends Emitter {
     constructor(){
+        super()
         let interval = {}
         let time = (25*60)
         let workTime = (25*60)
@@ -19,7 +21,8 @@ class timer {
             this.workTime = ((config.wtime)*60)
             this.lbTime = ((config.lbtime)*60)
             this.sbTime = ((config.sbtime)*60)
-            this.nIntervals = config.nIntervals
+            this.nIntervals = ((config.nIntervals)*1)
+            this.repetitions = 0
         }catch(e){
             console.log(e)
         }
@@ -27,20 +30,22 @@ class timer {
     startTimer(){
         console.log('Trabalhe')
         this.time = this.workTime
-        
+        this.opt = 'st'
+
         console.log(this.time)
 
         this.interval = setInterval(() => {
             this.time--
-        
+
             if(this.time < 10 && this.time > 0){
                 console.log(this.time)
             }
 
-            if(this.time < 0 ){        
+            if(this.time < 0 ){
                 clearInterval(this.interval)
                 console.log('Ding!')
                 this.repetitions++
+                (this.repetitions == this.nIntervals) ? this.emit('longBreak') : this.emit('shortBreak')
             }
         }, 1000)
     }
@@ -67,6 +72,7 @@ class timer {
             if(this.time < 0){
                 clearInterval(this.interval)
                 console.log('Volte ao trabalho')
+                this.emit('work')
             }
         }, 1000)
     }
@@ -80,6 +86,7 @@ class timer {
             if(this.time < 0){
                 clearInterval(this.interval)
                 console.log('Volte ao trabalho')
+                this.emit('work')
             }
         }, 1000)
     }
