@@ -1,4 +1,4 @@
-const Event = require('./event.class')
+const Event = require('./event.poc.class')
 
 const event = new Event
 
