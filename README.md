@@ -25,5 +25,5 @@
 - [ ] Create Users
 - [ ] Use Mongo
 - [ ] Create a Webserver
-- [ ] Create frontend
 - [ ] Create a telegram bot
+- [ ] Create frontend
