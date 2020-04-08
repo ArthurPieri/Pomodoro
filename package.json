@@ -1,6 +1,6 @@
 {
   "name": "pomodoro-cli",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A command line interface pomodoro",
   "main": "src/pomodoro-cli.js",
   "bin": {
