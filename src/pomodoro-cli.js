@@ -2,7 +2,7 @@
 
 const program = require('commander')
 const inquirer = require('inquirer')
-const Timer = require('./timer.class')
+const Timer = require('./model/timer.class')
 
 let timer = new Timer
 
@@ -86,7 +86,7 @@ function ask(){
             case 'quit':
                 console.log('\nStopping Timer and quiting')
                 timer.stopTimer()
-                break
+                return
             case 'help':
                 console.log('To start using your pomodoro type: start')
                 ask()
