@@ -15,8 +15,6 @@ class timer extends Emitter {
             const configJSON = fs.readFileSync('./src/config.json')
             const config = JSON.parse(configJSON)
 
-            console.log
-
             this.time = ((config.wtime)*60)
             this.workTime = ((config.wtime)*60)
             this.lbTime = ((config.lbtime)*60)
@@ -28,16 +26,18 @@ class timer extends Emitter {
         }
     }
     startTimer(){
-        console.log('Trabalhe')
+        console.log('\n --------------')
+        console.log('Comece a trabalhar')
+        console.log('--------------\n')
         this.time = this.workTime
         this.opt = 'st'
 
-        console.log(this.time)
+        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
 
         this.interval = setInterval(() => {
             this.time--
 
-            if(this.time < 10 && this.time > 0){
+            if(this.time < 6 && this.time > 0){
                 console.log(this.time)
             }
 
@@ -45,49 +45,49 @@ class timer extends Emitter {
                 clearInterval(this.interval)
                 console.log('Ding!')
                 this.repetitions++
-                (this.repetitions == this.nIntervals) ? this.emit('longBreak') : this.emit('shortBreak')
+                if (this.repetitions <= this.nIntervals){
+                    this.emit('shortBreak')
+                }else {
+                    this.repetitions = 0
+                    this.emit('longBreak')
+                }
             }
         }, 1000)
     }
     stopTimer(){
         clearInterval(this.interval)
+        console.log('\n --------------')
         console.log('Pedi pra parar, Parou')
-        console.log(this.time)
+        console.log(`Tempo restante: ${Math.floor(this.time/60)}:${this.time%60}`)
+        console.log('--------------\n')
     }
     resetTimer(){
         this.time = this.workTime
     }
     longBreak(){
+        console.log('\n --------------')
         console.log('Pausa grande')
+        console.log('--------------\n')
+        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
         this.repetitions = 0
         this.time = this.lbTime
-        console.log(this.time)
         this.interval = setInterval(() => {
             this.time--
 
-            if(this.time < 10 && this.time > 0){
-                console.log(this.time)
-            }
-
-            if(this.time < 0){
-                clearInterval(this.interval)
-                console.log('Volte ao trabalho')
-                this.emit('work')
-            }
+            this.showBreakTimer()
         }, 1000)
     }
     shortBreak(){
+        console.log('\n --------------')
         console.log('Pausa Curta')
+        console.log('--------------\n')
+        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
         this.time = this.sbTime
         this.interval = setInterval(() => {
-            console.log(this.time)
             this.time--
 
-            if(this.time < 0){
-                clearInterval(this.interval)
-                console.log('Volte ao trabalho')
-                this.emit('work')
-            }
+            this.showBreakTimer()
+            
         }, 1000)
     }
     configTimer(obj){
@@ -99,7 +99,22 @@ class timer extends Emitter {
         }
     }
     remainingTime(){
-        console.log(this.time)
+        console.log('\n --------------')
+        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
+        console.log('--------------\n')
+    }
+    showBreakTimer(){
+        if(this.time < 6 && this.time > 0){
+            console.log(this.time)
+        }
+
+        if(this.time < 0){
+            clearInterval(this.interval)
+            console.log('\n --------------')
+            console.log('Volte ao trabalho')
+            console.log('-------------- \n')
+            this.emit('work')
+        }
     }
 }
 

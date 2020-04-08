@@ -38,18 +38,20 @@ let config = [
     }
 ]
 
+// Event Listeners
+timer.on('shortBreak', () => {
+    timer.shortBreak()
+})
+timer.on('work', () => {
+    timer.startTimer()
+})
+timer.on('longBreak', () => {
+    timer.longBreak()
+})
+
 function ask(){
     inquirer.prompt(questions)
     .then(answers => {
-        timer.on('shortBreak', () => {
-            timer.shortBreak()
-        })
-        timer.on('work', () => {
-            timer.startTimer()
-        })
-        timer.on('longBreak', () => {
-            timer.longBreak()
-        })
         switch(answers.input.toLowerCase()){
             case 'start':
                 timer.startTimer()
