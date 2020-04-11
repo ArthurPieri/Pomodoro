@@ -22,7 +22,7 @@ class timer extends Emitter {
             this.nIntervals = ((config.nIntervals)*1)
             this.repetitions = 0
         }catch(e){
-            console.log(e)
+            return e
         }
     }
     startTimer(){
