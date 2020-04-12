@@ -23,8 +23,11 @@ timer.on('longBreak', () => {
 // ROUTES
 // ---------------------------
 app.get('/', (req, res) => {
+    let welcome = {
+        message: 'Welcome to my Pomodoro'
+    }
     try{
-        res.status(200).send(`Welcome to my Pomodoro`)
+        res.json(welcome)
     }catch(e){
         res.status(500).send(e)
     }
@@ -33,7 +36,7 @@ app.get('/', (req, res) => {
 app.post('/start', async(req, res) => {
     try{
         timer.startTimer()
-        res.status(200).send('\nTrabalhe\n\n')    
+        res.json({message: 'Start working'})    
     }catch(e){
         res.status(500).send(e)
     }
@@ -42,7 +45,7 @@ app.post('/start', async(req, res) => {
 app.post('/stop', async(req, res) => {
     try{
         timer.stopTimer()
-        res.status(200).send('Stopped')
+        res.json({message: 'Stopped'})
     }catch(e){
         res.status(500).send(e)
     }
@@ -51,7 +54,7 @@ app.post('/stop', async(req, res) => {
 app.post('/short', async(req, res) => {
     try{
         timer.shortBreak()
-        res.status(200).send('Short Break')
+        res.json({message: 'Short Break'})
     }catch(e){
         res.status(500).send(e)
     }
@@ -60,7 +63,7 @@ app.post('/short', async(req, res) => {
 app.post('/long', async(req, res) => {
     try{
         timer.longBreak()
-        res.status(200).send('Long Break')
+        res.json({message: 'Long Break'})
     }catch(e){
         res.status(500).send(e)
     }
@@ -69,7 +72,7 @@ app.post('/long', async(req, res) => {
 app.post('/reset', async(req, res) => {
     try{
         timer.resetTimer()
-        res.status(200).send('Restart')
+        res.json({message: 'Restart'})
     }catch(e){
         res.status(500).send(e)
     }
@@ -78,11 +81,21 @@ app.post('/reset', async(req, res) => {
 app.post('/config', async(req, res) => {
     try{
         console.log(req.body)
-        timer.workTime = req.body.wtime
-        timer.lbTime = req.body.lbtime
-        timer.sbTime = req.body.sbtime
+        timer.workTime = (req.body.wtime)*60
+        timer.lbTime = (req.body.lbtime)*60
+        timer.sbTime = (req.body.sbtime)*60
         timer.nIntervals = req.body.nIntervals
-        res.status(200).send('Config saved')
+        res.json({message: 'Config saved',
+                config: req.body})
+    }catch(e){
+        res.status(500).send(e)
+    }
+})
+
+app.get('/help', (req, res) => {
+    try{
+        let options = ['Start', 'Stop', 'Reset', 'Long', 'Short', 'Config', 'Time']
+        res.json({message: options})
     }catch(e){
         res.status(500).send(e)
     }
@@ -96,7 +109,7 @@ app.get('/config', async(req, res) => {
             shortBreak: timer.sbTime,
             nIntervals: timer.nIntervals
         }
-        res.status(200).send(JSON.stringify(config))
+        res.json(config)
     }catch(e){
         res.status(500).send(e)
     }
@@ -104,7 +117,9 @@ app.get('/config', async(req, res) => {
 
 app.get('/time', async(req, res) => {
     try{
-        await res.send(`\n${Math.floor(timer.time/60)}:${String((timer.time%60)).padStart(2, '0')}\n\n`)
+        await res.json({
+                        message: `${Math.floor(timer.time/60)}:${String((timer.time%60)).padStart(2, '0')}`,
+                        option: timer.opt})
     }catch(e){
         res.status(500)
     }

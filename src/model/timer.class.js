@@ -11,6 +11,7 @@ class timer extends Emitter {
         let sbTime = (5*60)
         let repetitions = 0
         let nIntervals = 4
+        let opt = ''
         try{
             const configJSON = fs.readFileSync('./src/db/config.json')
             const config = JSON.parse(configJSON)
@@ -27,11 +28,8 @@ class timer extends Emitter {
     }
     startTimer(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Comece a trabalhar')
-        console.log('--------------\n')
         this.time = this.workTime
-        this.opt = 'st'
+        this.opt = 'Work'
 
         console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')} \n`)
 
@@ -57,21 +55,16 @@ class timer extends Emitter {
     }
     stopTimer(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Pedi pra parar, Parou')
-        console.log(`Tempo restante: ${Math.floor(this.time/60)}:${this.time%60}`)
-        console.log('--------------\n')
+        console.log(`Remaining time: ${Math.floor(this.time/60)}:${this.time%60}`)
     }
     resetTimer(){
         this.time = this.workTime
     }
     longBreak(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Pausa grande')
-        console.log('--------------\n')
         console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
         this.repetitions = 0
+        this.opt = 'Long Break'
         this.time = this.lbTime
         this.interval = setInterval(() => {
             this.time--
@@ -81,9 +74,7 @@ class timer extends Emitter {
     }
     shortBreak(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Pausa Curta')
-        console.log('--------------\n')
+        this.opt = 'Short Break'
         this.time = this.sbTime
         this.interval = setInterval(() => {
             this.time--
@@ -96,14 +87,10 @@ class timer extends Emitter {
         try{
             const objJson = JSON.stringify(obj)
             fs.writeFileSync('./src/db/config.json', objJson)
+            fs.closeFileSync('./src/db/config.json')
         }catch (e){
             console.log(e)
         }
-    }
-    remainingTime(){
-        console.log('\n --------------')
-        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
-        console.log('--------------\n')
     }
     showBreakTimer(){
         if(this.time < 6 && this.time > 0){
@@ -112,9 +99,6 @@ class timer extends Emitter {
 
         if(this.time < 0){
             clearInterval(this.interval)
-            console.log('\n --------------')
-            console.log('Volte ao trabalho')
-            console.log('-------------- \n')
             this.emit('work')
         }
     }
