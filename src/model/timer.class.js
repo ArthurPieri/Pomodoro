@@ -35,7 +35,7 @@ class timer extends Emitter {
             const userJSON = JSON.stringify(user)
             fs.writeFileSync('./src/db/config.json', userJSON)    
         }catch(e){
-            console.log(e)
+            return e
         }
     }
     _loadUsers(){
@@ -84,9 +84,6 @@ class timer extends Emitter {
     }
     startTimer(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Start working')
-        console.log('--------------\n')
         this.time = this.workTime
         this.opt = 'Work'
 
@@ -114,22 +111,16 @@ class timer extends Emitter {
     }
     stopTimer(){
         clearInterval(this.interval)
-        console.log('\n --------------')
-        console.log('Stop!')
-        console.log(`Remaining Time: ${Math.floor(this.time/60)}:${this.time%60}`)
-        console.log('--------------\n')
+        console.log(`Remaining time: ${Math.floor(this.time/60)}:${this.time%60}`)
     }
     resetTimer(){
         this.time = this.workTime
     }
     longBreak(){
         clearInterval(this.interval)
-        this.opt = 'Long Break'
-        console.log('\n --------------')
-        console.log('Long Break')
-        console.log('--------------\n')
         console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
         this.repetitions = 0
+        this.opt = 'Long Break'
         this.time = this.lbTime
         this.interval = setInterval(() => {
             this.time--
@@ -140,9 +131,6 @@ class timer extends Emitter {
     shortBreak(){
         clearInterval(this.interval)
         this.opt = 'Short Break'
-        console.log('\n --------------')
-        console.log('Short Break')
-        console.log('--------------\n')
         this.time = this.sbTime
         this.interval = setInterval(() => {
             this.time--
@@ -155,26 +143,18 @@ class timer extends Emitter {
         try{
             const objJson = JSON.stringify(obj)
             fs.writeFileSync('./src/db/config.json', objJson)
+            fs.closeFileSync('./src/db/config.json')
         }catch (e){
             console.log(e)
         }
     }
-    remainingTime(){
-        console.log('\n --------------')
-        console.log(this.opt)
-        console.log(`${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
-        console.log('--------------\n')
-    }
-    _showBreakTimer(){
+    showBreakTimer(){
         if(this.time < 6 && this.time > 0){
             console.log(this.time)
         }
 
         if(this.time < 0){
             clearInterval(this.interval)
-            console.log('\n --------------')
-            console.log('Back to Work')
-            console.log('-------------- \n')
             this.emit('work')
         }
     }
