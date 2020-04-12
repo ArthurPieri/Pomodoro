@@ -24,6 +24,6 @@
 - [x] Create a [CLI](https://github.com/ArthurPieri/Pomodoro/tree/cli)
 - [x] Create a [Webserver](https://github.com/ArthurPieri/Pomodoro/tree/webserver)
 - [x] Create [Users](https://github.com/ArthurPieri/Pomodoro/tree/users)
-- [ ] Use Mongo
+- [ ] Use [Mongo](https://github.com/ArthurPieri/Pomodoro/tree/mongo)
 - [ ] Create a telegram bot
 - [ ] Create frontend
