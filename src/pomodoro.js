@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const fs = require('fs')
 const program = require('commander')
 const inquirer = require('inquirer')
 const Timer = require('./model/timer.class')
@@ -49,6 +50,38 @@ timer.on('longBreak', () => {
     timer.longBreak()
 })
 
+async function login(){
+    await inquirer.prompt({
+        type: "input",
+        name: "username",
+        message: "Username: ",
+    }).then(async answers => {
+        timer.username = answers.username
+        
+        if(!fs.existsSync('./src/db/config.json')){
+            fs.writeFileSync('./src/db/config.json', '[]')
+        }
+
+        let result = timer.findUser(answers.username)
+
+        if(result === null){
+            await inquirer.prompt(config).then(answers => {
+                let user = answers
+                user.username = timer.username
+
+                timer.addUser(user.username, user)
+                timer.workTime = ((answers.wtime)*60)
+                timer.lbTime = ((answers.lbtime)*60)
+                timer.sbTime = ((answers.sbtime)*60)
+                timer.nIntervals = ((answers.nIntervals)*60)
+            })
+        }
+        
+    }).then(() => {
+        ask()
+    })
+}
+
 function ask(){
     inquirer.prompt(questions)
     .then(answers => {
@@ -75,7 +108,10 @@ function ask(){
                 break
             case 'config':
                 inquirer.prompt(config).then(answers => {
-                    timer.configTimer(answers)
+                    let user = answers
+                    user.username = timer.username
+
+                    timer.configTimer(user)
                     timer.workTime = ((answers.wtime)*60)
                     timer.lbTime = ((answers.lbtime)*60)
                     timer.sbTime = ((answers.sbtime)*60)
@@ -113,4 +149,4 @@ function ask(){
     })
 }
 
-ask()
+login()

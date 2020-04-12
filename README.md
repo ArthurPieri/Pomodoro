@@ -22,8 +22,8 @@
 
 - [x] Test the timer [MVP](https://github.com/ArthurPieri/Pomodoro/tree/basic)
 - [x] Create a [CLI](https://github.com/ArthurPieri/Pomodoro/tree/cli)
+- [x] Create a [Webserver](https://github.com/ArthurPieri/Pomodoro/tree/webserver)
 - [ ] Create Users
 - [ ] Use Mongo
-- [ ] Create a Webserver
 - [ ] Create a telegram bot
 - [ ] Create frontend
