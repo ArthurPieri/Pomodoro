@@ -26,3 +26,4 @@
 - [x] Create [Users](https://github.com/ArthurPieri/Pomodoro/tree/users)
 - [ ] Use [Mongo](https://github.com/ArthurPieri/Pomodoro/tree/mongo)
 - [ ] Create a telegram bot
+- [ ] Create Frontend
