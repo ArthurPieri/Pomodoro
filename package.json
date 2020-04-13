@@ -7,21 +7,25 @@
     "pomodoro-cli": "./src/pomodoro-cli.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "commander": "^5.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "inquirer": "^7.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
+    "node-telegram-bot-api": "^0.40.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "nodemon": "^2.0.3",
     "supertest": "^4.0.2"
   },
   "scripts": {
     "start": "node src/index.js",
     "test": "mocha",
-    "dev": "nodemon src/index.js"
+    "bot": "env-cmd -f .env nodemon playground/telegrambot.js"
   },
   "repository": {
     "type": "git",
