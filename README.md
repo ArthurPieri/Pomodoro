@@ -25,6 +25,6 @@
 - [x] Create a [Webserver](https://github.com/ArthurPieri/Pomodoro/tree/webserver)
 - [x] Create [Users](https://github.com/ArthurPieri/Pomodoro/tree/users)
 - [x] Add [notifications](https://github.com/ArthurPieri/Pomodoro/tree/users)
-- [ ] Adapt everything to Use Mongo
+- [ ] Adapt everything to [Cron](https://www.npmjs.com/package/cron)
 - [ ] Create a telegram bot
 - [ ] Create frontend
