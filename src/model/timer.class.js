@@ -1,21 +1,32 @@
 const Emitter = require('events')
 const fs = require('fs')
 
+// @ts-ignore
 class timer extends Emitter {
     constructor(){
         super()
+        // @ts-ignore
         let username = ''
+        // @ts-ignore
         let interval = {}
+        // @ts-ignore
         let time = (25*60)
+        // @ts-ignore
         let workTime = (25*60)
+        // @ts-ignore
         let lbTime = (25*20)
+        // @ts-ignore
         let sbTime = (5*60)
+        // @ts-ignore
         let repetitions = 0
+        // @ts-ignore
         let nIntervals = 4
+        // @ts-ignore
         let opt = ''
         try{
             if(fs.existsSync('./src/db/config.json')){
                 const configJSON = fs.readFileSync('./src/db/config.json')
+                // @ts-ignore
                 const config = JSON.parse(configJSON)
     
                 this.username = config.username
@@ -30,6 +41,7 @@ class timer extends Emitter {
             console.log(e)
         }
     }
+    // @ts-ignore
     _saveUser(user){
         try{
             const userJSON = JSON.stringify(user)
@@ -47,8 +59,10 @@ class timer extends Emitter {
             return
         }
     }
+    // @ts-ignore
     findUser(username){
         const users = this._loadUsers()
+        // @ts-ignore
         const isUser = users.find((user) => user.username === username)
 
         if(isUser){
@@ -63,8 +77,10 @@ class timer extends Emitter {
             return null
         }
     }
+    // @ts-ignore
     addUser(username, config){
         const users = this._loadUsers()
+        // @ts-ignore
         const duplicatedUsers = users.find((user) => user.username === username)
 
         if(!duplicatedUsers){
@@ -83,6 +99,7 @@ class timer extends Emitter {
         }
     }
     startTimer(){
+        // @ts-ignore
         clearInterval(this.interval)
         console.log('\n --------------')
         console.log('Start working')
@@ -100,19 +117,23 @@ class timer extends Emitter {
             }
 
             if(this.time < 0 ){
+                // @ts-ignore
                 clearInterval(this.interval)
                 console.log('Ding!')
                 this.repetitions++
                 if (this.repetitions <= this.nIntervals){
+                    // @ts-ignore
                     this.emit('shortBreak')
                 }else {
                     this.repetitions = 0
+                    // @ts-ignore
                     this.emit('longBreak')
                 }
             }
         }, 1000)
     }
     stopTimer(){
+        // @ts-ignore
         clearInterval(this.interval)
         console.log('\n --------------')
         console.log('Stop!')
@@ -123,6 +144,7 @@ class timer extends Emitter {
         this.time = this.workTime
     }
     longBreak(){
+        // @ts-ignore
         clearInterval(this.interval)
         this.opt = 'Long Break'
         console.log('\n --------------')
@@ -138,6 +160,7 @@ class timer extends Emitter {
         }, 1000)
     }
     shortBreak(){
+        // @ts-ignore
         clearInterval(this.interval)
         this.opt = 'Short Break'
         console.log('\n --------------')
@@ -151,6 +174,7 @@ class timer extends Emitter {
             
         }, 1000)
     }
+    // @ts-ignore
     configTimer(obj){
         try{
             const objJson = JSON.stringify(obj)
@@ -171,10 +195,12 @@ class timer extends Emitter {
         }
 
         if(this.time < 0){
+            // @ts-ignore
             clearInterval(this.interval)
             console.log('\n --------------')
             console.log('Back to Work')
             console.log('-------------- \n')
+            // @ts-ignore
             this.emit('work')
         }
     }

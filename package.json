@@ -4,12 +4,13 @@
   "description": "A command line interface pomodoro",
   "main": "src/pomodoro-cli.js",
   "bin": {
-    "pomodoro-cli": "./src/pomodoro-cli.js"
+    "pomodoro-cli": "./src/pomodoro.js"
   },
   "dependencies": {
     "commander": "^5.0.0",
     "fs": "0.0.1-security",
     "inquirer": "^7.1.0",
+    "node-notifier": "^7.0.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {},

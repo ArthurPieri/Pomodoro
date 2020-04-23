@@ -4,6 +4,7 @@ const fs = require('fs')
 const program = require('commander')
 const inquirer = require('inquirer')
 const Timer = require('./model/timer.class')
+const notifier = require('node-notifier')
 
 let timer = new Timer
 
@@ -40,13 +41,28 @@ let config = [
 ]
 
 // Event Listeners
+// @ts-ignore
 timer.on('shortBreak', () => {
+    notifier.notify({
+        title: 'Pomodoro',
+        message: 'Starting Short Break'
+    })
     timer.shortBreak()
 })
+// @ts-ignore
 timer.on('work', () => {
+    notifier.notify({
+        title: 'Pomodoro',
+        message: 'Back to Work!'
+    })
     timer.startTimer()
 })
+// @ts-ignore
 timer.on('longBreak', () => {
+    notifier.notify({
+        title: 'Pomodoro',
+        message: 'Enjoy your long Break'
+    })
     timer.longBreak()
 })
 
@@ -70,9 +86,13 @@ async function login(){
                 user.username = timer.username
 
                 timer.addUser(user.username, user)
+                // @ts-ignore
                 timer.workTime = ((answers.wtime)*60)
+                // @ts-ignore
                 timer.lbTime = ((answers.lbtime)*60)
+                // @ts-ignore
                 timer.sbTime = ((answers.sbtime)*60)
+                // @ts-ignore
                 timer.nIntervals = ((answers.nIntervals)*60)
             })
         }
@@ -85,24 +105,45 @@ async function login(){
 function ask(){
     inquirer.prompt(questions)
     .then(answers => {
+        // @ts-ignore
         switch(answers.input.toLowerCase()){
             case 'start':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Begin you work'
+                })
                 timer.startTimer()
                 ask()
                 break
             case 'stop':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Timer Stopped'
+                })
                 timer.stopTimer()
                 ask()
                 break
             case 'long':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Enjoy your long Break'
+                })
                 timer.longBreak()
                 ask()
                 break
             case 'short':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Quick Break'
+                })
                 timer.shortBreak()
                 ask()
                 break
             case 'reset':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Timer reseted'
+                })
                 timer.resetTimer()
                 ask()
                 break
@@ -112,14 +153,22 @@ function ask(){
                     user.username = timer.username
 
                     timer.configTimer(user)
+                    // @ts-ignore
                     timer.workTime = ((answers.wtime)*60)
+                    // @ts-ignore
                     timer.lbTime = ((answers.lbtime)*60)
+                    // @ts-ignore
                     timer.sbTime = ((answers.sbtime)*60)
+                    // @ts-ignore
                     timer.nIntervals = ((answers.nIntervals)*60)
                     ask()
                 })
                 break
             case 'quit':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: 'Exiting pomodoro'
+                })
                 console.log('\nStopping Timer and quiting')
                 timer.stopTimer()
                 return
@@ -128,10 +177,19 @@ function ask(){
                 ask()
                 break
             case 'remaining':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: `Remaining time: ${Math.floor(timer.time/60)}:${String((timer.time%60)).padStart(2, '0')}`
+                })
                 timer.remainingTime()
                 ask()
                 break
             case 'r':
+                notifier.notify({
+                    title: 'Pomodoro',
+                    message: `Remaining time: ${Math.floor(timer.time/60)}:${String((timer.time%60)).padStart(2, '0')}`,
+                    wait: true
+                })
                 timer.remainingTime()
                 ask()
                 break
