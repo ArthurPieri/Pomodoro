@@ -9,11 +9,16 @@
     ```sh
     $ npm install
     ```
-4. To start the pomodoro-CLI run:
+4. Create a .env file with the following varibles:
+    ```
+    BOT_TOKEN="Here you must enter the token provided by Botfather"
+    PORT="Enter the port for your app"
+    ```
+5. To start the pomodoro-CLI run:
     ```sh
     $ npm start
     ```
-5. If you want a CLI command to be installed globaly:
+6. If you want a CLI command to be installed globaly:
     ```sh
     $ npm install -g
     ```

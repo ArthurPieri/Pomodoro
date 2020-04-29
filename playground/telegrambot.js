@@ -1,5 +1,6 @@
 const TelegramBot = require('node-telegram-bot-api');
 const Emitter = require(`events`)
+const fs = require(`fs`)
 
 const event = new Emitter
 
@@ -28,6 +29,7 @@ let chatId = bot.onText(/\/echo (.+)/, (msg, match) => {
 // messages.
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
+  console.log(chatId)
 
   // send a message to the chat acknowledging receipt of their message
   bot.sendMessage(chatId, 'Received your message');
@@ -44,3 +46,7 @@ setTimeout(() => {
 bot.on(`teste`, (chatId) => [
     bot.sendMessage(chatId, 'Emitter test')
 ])
+
+setTimeout(() => {
+  bot.sendMessage(12360288, `Foi caraio`)
+}, 2000)
