@@ -49,4 +49,4 @@ bot.on(`teste`, (chatId) => [
 
 setTimeout(() => {
   bot.sendMessage(12360288, `Foi caraio`)
-}, 2000)
+}, 5000)

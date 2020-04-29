@@ -2,7 +2,7 @@
 
 ## Installing
 
-0. Install node (I recommend using [NVM](https://github.com/nvm-sh/nvm))
+0. Install node (I recommend using [NVM](https://github.com/nvm-sh/nvm)) and MongoDB
 1. Clone the Repo
 2. Browse to the Pomodoro folder
 3. Install applicatication by running: 
@@ -13,6 +13,7 @@
     ```
     BOT_TOKEN="Here you must enter the token provided by Botfather"
     PORT="Enter the port for your app"
+    MONGODB_URL="Enter the Mongo DB URL"
     ```
 5. To start the pomodoro-CLI run:
     ```sh
@@ -29,6 +30,5 @@
 - [x] Create a [CLI](https://github.com/ArthurPieri/Pomodoro/tree/cli)
 - [x] Create a [Webserver](https://github.com/ArthurPieri/Pomodoro/tree/webserver)
 - [x] Create [Users](https://github.com/ArthurPieri/Pomodoro/tree/users)
-- [ ] Use [Mongo](https://github.com/ArthurPieri/Pomodoro/tree/mongo)
-- [ ] Create a telegram bot
+- [ ] Create a [Telegram bot](https://github.com/ArthurPieri/Pomodoro/tree/telegram-bot)
 - [ ] Create Frontend

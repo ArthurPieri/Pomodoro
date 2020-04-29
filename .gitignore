@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Config Files
-src/db/
+src/db/chatObj.json

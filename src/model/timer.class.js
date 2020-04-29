@@ -8,7 +8,7 @@ class timer extends Emitter {
         let interval = {}
         let time = (25*60)
         let workTime = (25*60)
-        let lbTime = (25*20)
+        let lbTime = (20*60)
         let sbTime = (5*60)
         let repetitions = 0
         let nIntervals = 4
@@ -148,7 +148,7 @@ class timer extends Emitter {
             console.log(e)
         }
     }
-    showBreakTimer(){
+    _showBreakTimer(){
         if(this.time < 6 && this.time > 0){
             console.log(this.time)
         }

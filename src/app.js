@@ -1,4 +1,5 @@
 const Timer = require('./model/timer.class')
+require('./db/mongoose')
 const express = require('express')
 
 const app = express()

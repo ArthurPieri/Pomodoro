@@ -13,7 +13,7 @@
     "fs": "0.0.1-security",
     "inquirer": "^7.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.7",
+    "mongoose": "^5.9.10",
     "node-telegram-bot-api": "^0.40.0",
     "yargs": "^15.3.1"
   },
@@ -24,6 +24,7 @@
   },
   "scripts": {
     "start": "node src/index.js",
+    "dev": "env-cmd -f .env nodemon src/index.js",
     "test": "mocha",
     "bot": "env-cmd -f .env nodemon playground/telegrambot.js"
   },
