@@ -43,19 +43,19 @@ const timerSchema = new mongoose.Schema({
     }
 })
 
-timerSchema.methods.startTime = function (){
+timerSchema.methods.startTime = function(){
     clearInterval(this.interval)
-    let humanTimer = Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')
+    let humanTimer = `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`
     this.time = this.workTime
     this.opt = 'work'
 
-    bot.sendMessage(this.chatId, `${humanTimer}`)
+    bot.sendMessage(this.chatId, humanTimer)
 
     this.interval = setInterval(() => {
         this.time--
 
         if(this.time < 6 && this.time > 0){
-            bot.sendMessage(this.chatId, `${humanTimer}`)
+            bot.sendMessage(this.chatId, humanTimer)
         }
 
         if(this.time < 0){
@@ -73,13 +73,44 @@ timerSchema.methods.startTime = function (){
     },1000)
 }
 
-timerSchema.methods.stopTimer = function (){
+timerSchema.methods.stopTimer = function(){
     clearInterval(this.interval)
     bot.sendMessage(this.chatId, `Timer Stoped! Remaining: ${Math.floor(this.time/60)}:${this.time%60}`)
 }
 
-timerSchema.methods.longBreak = function () {
+timerSchema.methods.longBreak = function(){
+    clearInterval(this.interval)
+    bot.sendMessage(this.chatId, `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
+    this.repetitions = 0
+    this.opt = 'Long Break'
+    this.time = this.lbTime
+    this.interval = setInterval(() => {
+        this.time--
 
+        this.showBreakTimer()
+    },1000)
+}
+
+timerSchema.methods.shortBreak = function(){
+    clearInterval(this.interval)
+    this.opt = 'Short Break'
+    this.time = this.sbtime
+    this.interval = setInterval(() => {
+        this.time--
+
+        this.showBreakTimer()
+    },1000)
+}
+
+timerSchema.statics.showBreakTimer = function(){
+    if(this.time < 6 && this.time > 0){
+        bot.sendMessage(this.chatId, `${this.time}s`)
+    }
+
+    if(this.time < 0){
+        clearInterval(this.interval)
+        sEvents.emit('work')
+    }
 }
 
 const Timer = mongoose.model(`Timer`, timerSchema)
