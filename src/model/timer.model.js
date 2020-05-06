@@ -43,24 +43,24 @@ const timerSchema = new mongoose.Schema({
     }
 })
 
-timerSchema.methods.startTimer = function(){
+timerSchema.methods.startTimer = function(msg){
     clearInterval(this.interval)
     let humanTimer = `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`
     this.time = this.workTime
     this.opt = 'work'
 
-    bot.sendMessage(this.chatId, humanTimer)
+    bot.sendMessage(msg.from.id, humanTimer)
 
     this.interval = setInterval(() => {
         this.time--
 
         if(this.time < 6 && this.time > 0){
-            bot.sendMessage(this.chatId, humanTimer)
+            bot.sendMessage(msg.from.id, humanTimer)
         }
 
         if(this.time < 0){
             clearInterval(this.interval)
-            bot.sendMessage(this.chatId, 'DING!')
+            bot.sendMessage(msg.from.id, 'DING!')
             this.repetitions++
             if(this.repetitions <= this.nIntervals){
                 sEvents.emit('shortBreak')
@@ -75,12 +75,12 @@ timerSchema.methods.startTimer = function(){
 
 timerSchema.methods.stopTimer = function(){
     clearInterval(this.interval)
-    bot.sendMessage(this.chatId, `Timer Stoped! Remaining: ${Math.floor(this.time/60)}:${this.time%60}`)
+    bot.sendMessage(msg.from.id, `Timer Stoped! Remaining: ${Math.floor(this.time/60)}:${this.time%60}`)
 }
 
 timerSchema.methods.longBreak = function(){
     clearInterval(this.interval)
-    bot.sendMessage(this.chatId, `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
+    bot.sendMessage(msg.from.id, `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`)
     this.repetitions = 0
     this.opt = 'Long Break'
     this.time = this.lbTime
@@ -104,7 +104,7 @@ timerSchema.methods.shortBreak = function(){
 
 timerSchema.statics.showBreakTimer = function(){
     if(this.time < 6 && this.time > 0){
-        bot.sendMessage(this.chatId, `${this.time}s`)
+        bot.sendMessage(msg.from.id, `${this.time}s`)
     }
 
     if(this.time < 0){

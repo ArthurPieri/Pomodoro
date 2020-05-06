@@ -1,9 +1,5 @@
-const bot = require('./utils/telegrambot')
-const Timer = require('./model/timer.model')
-
-let timer = new Timer
-
-console.log(timer)
+const TeleBot = require('telebot');
+const bot = new TeleBot(process.env.BOT_TOKEN);
 
 // On commands
 bot.on(['/start', '/back'], msg => {
@@ -12,8 +8,6 @@ bot.on(['/start', '/back'], msg => {
         ['/buttons', '/inlineKeyboard'],
         ['/start', '/hide']
     ], {resize: true});
-
-    timer.startTimer(msg)
 
     return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
 
