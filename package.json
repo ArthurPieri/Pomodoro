@@ -26,7 +26,8 @@
     "start": "node src/index.js",
     "dev": "env-cmd -f .env nodemon src/index.js",
     "test": "mocha",
-    "bot": "env-cmd -f .env nodemon playground/telegrambot.js"
+    "bot": "env-cmd -f .env nodemon playground/telegrambot.js",
+    "testbot": "env-cmd -f .env nodemon playground/timerModel.test.js"
   },
   "repository": {
     "type": "git",

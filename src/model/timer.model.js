@@ -43,7 +43,7 @@ const timerSchema = new mongoose.Schema({
     }
 })
 
-timerSchema.methods.startTime = function(){
+timerSchema.methods.startTimer = function(){
     clearInterval(this.interval)
     let humanTimer = `${Math.floor(this.time/60)}:${String((this.time%60)).padStart(2, '0')}`
     this.time = this.workTime

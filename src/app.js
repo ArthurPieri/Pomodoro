@@ -1,4 +1,4 @@
-const Timer = require('./model/timer.class')
+const Timer = require('./trash/timer.class')
 require('./db/mongoose')
 const express = require('express')
 
