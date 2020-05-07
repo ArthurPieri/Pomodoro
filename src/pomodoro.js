@@ -5,19 +5,33 @@ let timer = new Timer
 
 console.log(timer)
 
-// On commands
-bot.on(['/start', '/back'], msg => {
+/*
+start - Start your pomodoro timer
+stop - Stop the tmer
+short - Start a short Break
+long - Start a Long Break
+reset - Restart the current timer
+config - Set the timers for each cycle of work, short break, long break and the number of repetitions
+help - Get some Help on how to use the bot or what is the Pomodoro Technique
+*/
 
+bot.on(`/start`, msg => {
     let replyMarkup = bot.keyboard([
-        ['/buttons', '/inlineKeyboard'],
-        ['/start', '/hide']
-    ], {resize: true});
-
-    timer.startTimer(msg)
+        ['/stop', '/short',`/long`],
+        ['/reset', '/conig', '/help']
+    ], {resize: true})
 
     return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+})
 
-});
+// On commands
+// bot.on(['/start', '/back'], msg => {
+//     let replyMarkup = bot.keyboard([
+//         ['/buttons', '/inlineKeyboard',`/testinho`],
+//         ['/start', '/hide', '/testao']
+//     ], {resize: true});
+//     return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+// });
 
 // Buttons
 bot.on('/buttons', msg => {
