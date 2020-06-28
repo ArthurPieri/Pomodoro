@@ -1,0 +1,21 @@
+{
+    "message_id":294,
+    "from":{
+        "id":12360288,
+        "is_bot":false,
+        "first_name":"Arthur",
+        "last_name":"Pieri",
+        "username":"ArthurPieri",
+        "language_code":"en"
+        },
+    "chat":{
+        "id":12360288,
+        "first_name":"Arthur",
+        "last_name":"Pieri",
+        "username":"ArthurPieri",
+        "type":"private"
+        },
+    "date":1593370161,
+    "text":"Hahaha",
+    "reply":{}
+}

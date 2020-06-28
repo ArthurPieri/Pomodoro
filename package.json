@@ -1,22 +1,14 @@
 {
-  "name": "pomodoro-cli",
+  "name": "pimodorobot",
   "version": "0.1.0",
-  "description": "A command line interface pomodoro",
-  "main": "src/pomodoro-cli.js",
-  "bin": {
-    "pomodoro-cli": "./src/pomodoro-cli.js"
-  },
+  "description": "A pomodoro bot for telegram",
+  "main": "src/app.js",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "commander": "^5.0.0",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
-    "inquirer": "^7.1.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.10",
+    "moment": "^2.27.0",
     "node-telegram-bot-api": "^0.40.0",
-    "telebot": "^1.3.0",
-    "yargs": "^15.3.1"
+    "telebot": "^1.4.1"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
@@ -28,7 +20,8 @@
     "dev": "env-cmd -f .env nodemon src/pomodoro.js",
     "test": "mocha",
     "bot": "env-cmd -f .env nodemon playground/telegrambot.js",
-    "testbot": "env-cmd -f .env nodemon playground/telebot.js"
+    "testbot": "env-cmd -f .env nodemon playground/telebot.js",
+    "plist": "env-cmd -f .env nodemon playground/plistbot.js"
   },
   "repository": {
     "type": "git",
