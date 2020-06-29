@@ -44,7 +44,6 @@ setInterval(() => {
         if(moment().calendar() == element.date){
             bot.sendMessage(element.tkey, `Hey ${element.name} Times up!`)
             tArray.pop(tArray.indexOf(element))
-            return
         }        
     });
     // colocar aqui o bot.sendMessage() para avisar a pessoa quando acaba o timer
