@@ -6,6 +6,8 @@ const TelegramBot = require('telebot')
 const token = process.env.BOT_TOKEN
 
 let tArray = []
+let removeArray = []
+let stoppedArray = []
 
 // Criando o bot para usar depois
 const bot = new TelegramBot(token)
@@ -28,14 +30,27 @@ bot.on('/hide', msg => {
     )
 })
 
-bot.on('/start', (msg) => {
+bot.on('/start', msg => {
     tArray.push({
         username: msg.from.username,
         name: msg.from.first_name,
         tkey: msg.from.id,
-        date: moment().add(1, 'minutes').calendar()
+        date: moment().add(25, 'minutes').calendar()
     })
-    msg.reply.text('Start working!')
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work!`)
+})
+
+bot.on(`/stop`, msg => {
+    tArray.forEach(element => {
+        if(msg.from.id === element.tkey){
+            msg.reply.text(`${msg.from.first_name} timer stoped. Remember to keep on going!`)
+            stoppedArray.push(tArray.indexOf(element))
+        }  
+    })
+    removeArray.forEach(element => {
+        tArray.pop(element)
+    })
+    removeArray = []
 })
 
 // Esse intervalo vai verificar quando enviar a mensagem
@@ -43,10 +58,13 @@ setInterval(() => {
     tArray.forEach(element => {
         if(moment().calendar() == element.date){
             bot.sendMessage(element.tkey, `Hey ${element.name} Times up!`)
-            tArray.pop(tArray.indexOf(element))
+            removeArray.push(tArray.indexOf(element))
         }        
     });
-    // colocar aqui o bot.sendMessage() para avisar a pessoa quando acaba o timer
-},1000)
+    removeArray.forEach(element => {
+        tArray.pop(element)
+    })
+    removeArray = []
+},5000)
 
 bot.start()
