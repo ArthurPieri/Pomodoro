@@ -78,7 +78,7 @@ bot.on('/work', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes (UTC-03:00)').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()} (UTC-03:00)`)
     exists = false
 })
 
@@ -115,7 +115,7 @@ bot.on('/short', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().add(5, 'minutes (UTC-03:00)').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().add(5, 'minutes').calendar()} (UTC-03:00)`)
     exists = false
 })
 
@@ -141,7 +141,7 @@ bot.on('/long', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().add(15, 'minutes (UTC-03:00)').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().add(15, 'minutes').calendar()} (UTC-03:00)`)
     exists = false
 })
 
