@@ -9,6 +9,8 @@ let removeArray = []
 const bot = new TelegramBot(token)
 const app = express()
 const port = process.env.PORT || 4200
+moment.tz.setDefault('America/Sao_Paulo')
+
 
 app.get('/', (req, res) => {
     res.render('Home', {
@@ -17,7 +19,7 @@ app.get('/', (req, res) => {
     })
 })
 
-console.log(moment().tz('America/Sao_Paulo'))
+console.log(moment())
 
 // Keyboard
 bot.on(['/hello'], (msg) => {
@@ -76,7 +78,7 @@ bot.on('/work', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().tz('America/Sao_Paulo').add(25, 'minutes').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()}`)
     exists = false
 })
 
@@ -113,7 +115,7 @@ bot.on('/short', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().tz('America/Sao_Paulo').add(5, 'minutes').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().add(5, 'minutes').calendar()}`)
     exists = false
 })
 
@@ -139,7 +141,7 @@ bot.on('/long', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().tz('America/Sao_Paulo').add(15, 'minutes').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().add(15, 'minutes').calendar()}`)
     exists = false
 })
 
