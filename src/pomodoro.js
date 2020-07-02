@@ -1,7 +1,7 @@
 const moment = require('moment')
 const TelegramBot = require('telebot')
 const token = process.env.BOT_TOKEN
-const express = require(express)
+const express = require('express')
 
 let tArray = []
 let removeArray = []
