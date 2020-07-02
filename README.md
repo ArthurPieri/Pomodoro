@@ -29,4 +29,7 @@
 - [x] Create a [Webserver](https://github.com/ArthurPieri/Pomodoro/tree/webserver)
 - [x] Create [Users](https://github.com/ArthurPieri/Pomodoro/tree/users)
 - [x] Create a [Telegram bot](https://github.com/ArthurPieri/Pomodoro/tree/telegram-bot)
+    - [ ] Create events chaining
+    - [ ] Enable text configuration (e.g. /work 30 -> Start a pomodoro with 30 min duration)
+    - [ ] Enable inline bot
 - [ ] Create Frontend
