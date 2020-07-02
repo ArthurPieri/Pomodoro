@@ -1,99 +1,147 @@
-const bot = require('./utils/telegrambot')
-const Timer = require('./model/timer.model')
+const moment = require('moment')
+const TelegramBot = require('telebot')
+const token = process.env.BOT_TOKEN
 
-let timer = new Timer
+let tArray = []
+let removeArray = []
 
-console.log(timer)
+const bot = new TelegramBot(token)
 
-/*
-start - Start your pomodoro timer
-stop - Stop the tmer
-short - Start a short Break
-long - Start a Long Break
-reset - Restart the current timer
-config - Set the timers for each cycle of work, short break, long break and the number of repetitions
-help - Get some Help on how to use the bot or what is the Pomodoro Technique
-*/
-
-bot.on(`/start`, msg => {
+// Keyboard
+bot.on(['/hello'], (msg) => {
     let replyMarkup = bot.keyboard([
-        ['/stop', '/short',`/long`],
-        ['/reset', '/conig', '/help']
-    ], {resize: true})
-
-    return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
+    ], {resize: true})    
+    return bot.sendMessage(msg.from.id, `Hello ${msg.from.first_name} welcome!`, {replyMarkup});    
 })
 
-// On commands
-// bot.on(['/start', '/back'], msg => {
-//     let replyMarkup = bot.keyboard([
-//         ['/buttons', '/inlineKeyboard',`/testinho`],
-//         ['/start', '/hide', '/testao']
-//     ], {resize: true});
-//     return bot.sendMessage(msg.from.id, 'Keyboard example.', {replyMarkup});
-// });
-
-// Buttons
-bot.on('/buttons', msg => {
-
+bot.on(['/buttons', '/back', `/start`], msg => {
     let replyMarkup = bot.keyboard([
-        [bot.button('contact', 'Your contact'), bot.button('location', 'Your location')],
-        ['/back', '/hide']
-    ], {resize: true});
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
+    ], {resize: true})
 
-    return bot.sendMessage(msg.from.id, 'Button example.', {replyMarkup});
+    return bot.sendMessage(msg.from.id, 'Here are some options.', {replyMarkup});
+})
 
-});
+bot.on('/help', msg => {
+    let replyMarkup = bot.keyboard([
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
+    ], {resize: true})    
+    bot.sendMessage(msg.from.id, `  Hello ${msg.from.first_name} welcome! 
+    This bot was created to be a Pomodoro timer.
+    If you want to Learn more access: https://arthurpieri.com/pomodoro`, {replyMarkup});
+})
 
-// Hide keyboard
 bot.on('/hide', msg => {
     return bot.sendMessage(
-        msg.from.id, 'Hide keyboard example. Type /back to show.', {replyMarkup: 'hide'}
-    );
-});
+        msg.from.id, 'Keyboard hidden. Type /back to show.', {replyMarkup: 'hide'}
+    )
+})
 
-// On location on contact message
-bot.on(['location', 'contact'], (msg, self) => {
-    return bot.sendMessage(msg.from.id, `Thank you for ${ self.type }.`);
-});
+// Actual functions
+bot.on('/work', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
+    })
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(25, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(25, 'minutes').calendar()
+        })
+    }
 
-// Inline buttons
-bot.on('/inlineKeyboard', msg => {
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()}`)
+    exists = false
+})
 
-    let replyMarkup = bot.inlineKeyboard([
-        [
-            bot.inlineButton('callback', {callback: 'this_is_data'}),
-            bot.inlineButton('inline', {inline: 'some query'})
-        ], [
-            bot.inlineButton('url', {url: 'https://telegram.org'})
-        ]
-    ]);
+bot.on(`/stop`, msg => {
+    let stopped
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        stopped = tArray.indexOf(element)
+        msg.reply.text(`${msg.from.first_name} timer stoped. Remember to keep on going!`)
+    })
+    tArray.pop(stopped)
+    stopped = undefined
+})
 
-    return bot.sendMessage(msg.from.id, 'Inline keyboard example.', {replyMarkup});
+bot.on('/short', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
+    })
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        })
+    }
 
-});
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().add(5, 'minutes').calendar()}`)
+    exists = false
+})
 
-// Inline button callback
-bot.on('callbackQuery', msg => {
-    // User message alert
-    return bot.answerCallbackQuery(msg.id, `Inline button callback: ${ msg.data }`, true);
-});
+bot.on('/long', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
+    })
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(15, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        })
+    }
 
-// Inline query
-bot.on('inlineQuery', msg => {
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().add(15, 'minutes').calendar()}`)
+    exists = false
+})
 
-    const query = msg.query;
-    const answers = bot.answerList(msg.id);
-
-    answers.addArticle({
-        id: 'query',
-        title: 'Inline Query',
-        description: `Your query: ${ query }`,
-        message_text: 'Click!'
+setInterval(() => {
+    tArray.forEach(element => {
+        if(moment().calendar() == element.date){
+            bot.sendMessage(element.tkey, `Hey ${element.name} Times up!`)
+            removeArray.push(tArray.indexOf(element))
+        }        
     });
+    removeArray.forEach(element => {
+        tArray.pop(element)
+    })
+    removeArray = []
+},5000)
 
-    return bot.answerQuery(answers);
-
-});
-
-bot.start();
+bot.start()

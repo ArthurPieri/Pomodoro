@@ -4,10 +4,7 @@
   "description": "A pomodoro bot for telegram",
   "main": "src/app.js",
   "dependencies": {
-    "express": "^4.17.1",
-    "fs": "0.0.1-security",
     "moment": "^2.27.0",
-    "node-telegram-bot-api": "^0.40.0",
     "telebot": "^1.4.1"
   },
   "devDependencies": {
@@ -18,10 +15,7 @@
   "scripts": {
     "start": "node src/pomodoro.js",
     "dev": "env-cmd -f .env nodemon src/pomodoro.js",
-    "test": "mocha",
-    "bot": "env-cmd -f .env nodemon playground/telegrambot.js",
-    "testbot": "env-cmd -f .env nodemon playground/telebot.js",
-    "plist": "env-cmd -f .env nodemon playground/plistbot.js"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
