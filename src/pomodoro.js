@@ -13,7 +13,7 @@ moment.tz.setDefault('America/Sao_Paulo')
 
 
 app.get('/', (req, res) => {
-    res.render('Home', {
+    res.send({
         title: 'Pomodoro',
         name: 'by: Arthur Pieri'
     })
