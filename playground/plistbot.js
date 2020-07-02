@@ -7,22 +7,38 @@ const token = process.env.BOT_TOKEN
 
 let tArray = []
 let removeArray = []
-let stoppedArray = []
 
 // Criando o bot para usar depois
 const bot = new TelegramBot(token)
 
 // Declarações dos botões do teclado do bot que serão usados
-bot.on(['/hello'], (msg) => msg.reply.text('Welcome!'));
-
-bot.on(['/buttons', '/back'], msg => {
+bot.on(['/hello'], (msg) => {
     let replyMarkup = bot.keyboard([
-        ['/start', '/short',`/long`],
-        ['/stop', '/config', '/help']
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
+    ], {resize: true})    
+    return bot.sendMessage(msg.from.id, `Hello ${msg.from.first_name} welcome!`, {replyMarkup});    
+})
+
+bot.on(['/buttons', '/back', `/start`], msg => {
+    let replyMarkup = bot.keyboard([
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
     ], {resize: true})
 
-    return bot.sendMessage(msg.from.id, 'Here is some options.', {replyMarkup});
+    return bot.sendMessage(msg.from.id, 'Here are some options.', {replyMarkup});
 })
+
+bot.on('/help', msg => {
+    let replyMarkup = bot.keyboard([
+        ['/work', '/stop',`/hide`],
+        ['/short', '/long', '/help']
+    ], {resize: true})    
+    bot.sendMessage(msg.from.id, `  Hello ${msg.from.first_name} welcome! 
+    This bot was created to be a Pomodoro timer.
+    If you want to Learn more access: https://arthurpieri.com/pomodoro`, {replyMarkup});
+})
+
 
 bot.on('/hide', msg => {
     return bot.sendMessage(
@@ -30,27 +46,93 @@ bot.on('/hide', msg => {
     )
 })
 
-bot.on('/start', msg => {
-    tArray.push({
-        username: msg.from.username,
-        name: msg.from.first_name,
-        tkey: msg.from.id,
-        date: moment().add(25, 'minutes').calendar()
+bot.on('/work', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
     })
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work!`)
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(25, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(25, 'minutes').calendar()
+        })
+    }
+
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()}`)
+    exists = false
 })
 
 bot.on(`/stop`, msg => {
-    tArray.forEach(element => {
-        if(msg.from.id === element.tkey){
-            msg.reply.text(`${msg.from.first_name} timer stoped. Remember to keep on going!`)
-            stoppedArray.push(tArray.indexOf(element))
-        }  
+    let stopped
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        stopped = tArray.indexOf(element)
+        msg.reply.text(`${msg.from.first_name} timer stoped. Remember to keep on going!`)
     })
-    removeArray.forEach(element => {
-        tArray.pop(element)
+    tArray.pop(stopped)
+    stopped = undefined
+})
+
+bot.on('/short', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
     })
-    removeArray = []
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        })
+    }
+
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 5 minutes rest! \n Your timer will end at: ${moment().add(5, 'minutes').calendar()}`)
+    exists = false
+})
+
+bot.on('/long', msg => {
+    let exists
+    tArray.find( element => {
+        element.tkey === msg.from.id
+        exists = tArray.indexOf(element)
+    })
+    if(exists >= 0){
+        tArray[exists] = {
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(15, 'minutes').calendar()
+        }        
+    }else {
+        tArray.push({
+            username: msg.from.username,
+            name: msg.from.first_name,
+            tkey: msg.from.id,
+            date: moment().add(5, 'minutes').calendar()
+        })
+    }
+
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 15 minutes long rest! \n Your timer will end at: ${moment().add(15, 'minutes').calendar()}`)
+    exists = false
 })
 
 // Esse intervalo vai verificar quando enviar a mensagem
