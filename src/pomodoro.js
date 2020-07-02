@@ -8,14 +8,16 @@ let removeArray = []
 
 const bot = new TelegramBot(token)
 const app = express()
-const port = 4200|process.env.port
+const port = 4200|process.env.PORT
 
-app.get('', (req, res) => {
+app.get('/', (req, res) => {
     res.render('Home', {
         title: 'Pomodoro',
         name: 'by: Arthur Pieri'
     })
 })
+
+console.log(moment().locale('pt-br'))
 
 // Keyboard
 bot.on(['/hello'], (msg) => {
@@ -74,7 +76,7 @@ bot.on('/work', msg => {
         })
     }
 
-    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()}`)
+    msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().locale('pt-br').add(25, 'minutes').calendar()}`)
     exists = false
 })
 
