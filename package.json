@@ -4,6 +4,7 @@
   "description": "A pomodoro bot for telegram",
   "main": "src/app.js",
   "dependencies": {
+    "express": "^4.17.1",
     "moment": "^2.27.0",
     "telebot": "^1.4.1"
   },

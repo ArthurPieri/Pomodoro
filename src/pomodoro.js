@@ -1,11 +1,21 @@
 const moment = require('moment')
 const TelegramBot = require('telebot')
 const token = process.env.BOT_TOKEN
+const express = require(express)
 
 let tArray = []
 let removeArray = []
 
 const bot = new TelegramBot(token)
+const app = express()
+const port = 4200|process.env.port
+
+app.get('', (req, res) => {
+    res.render('Home', {
+        title: 'Pomodoro',
+        name: 'by: Arthur Pieri'
+    })
+})
 
 // Keyboard
 bot.on(['/hello'], (msg) => {
@@ -145,3 +155,7 @@ setInterval(() => {
 },5000)
 
 bot.start()
+
+app.listen(port, () => {
+    console.log('Server is up on port ' + port)
+})
