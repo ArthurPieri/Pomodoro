@@ -1,25 +1,12 @@
 const moment = require('moment-timezone')
 const TelegramBot = require('telebot')
 const token = process.env.BOT_TOKEN
-const express = require('express')
 
 let tArray = []
 let removeArray = []
 
 const bot = new TelegramBot(token)
-const app = express()
-const port = process.env.PORT || 4200
 moment.tz.setDefault('America/Sao_Paulo')
-
-
-app.get('/', (req, res) => {
-    res.send({
-        title: 'Pomodoro',
-        name: 'by: Arthur Pieri'
-    })
-})
-
-console.log(moment())
 
 // Keyboard
 bot.on(['/hello'], (msg) => {
@@ -159,7 +146,3 @@ setInterval(() => {
 },5000)
 
 bot.start()
-
-app.listen(port, () => {
-    console.log('Server is up on port ' + port)
-})
