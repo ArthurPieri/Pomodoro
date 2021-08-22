@@ -1,3 +1,4 @@
+require('dotenv').config()
 const moment = require('moment-timezone')
 const TelegramBot = require('telebot')
 const token = process.env.BOT_TOKEN
