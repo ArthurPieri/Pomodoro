@@ -45,11 +45,12 @@ bot.on('/hide', msg => {
 
 // Actual functions
 bot.on('/work', msg => {
-    let exists
-    tArray.find( element => {
-        element.tkey === msg.from.id
-        exists = tArray.indexOf(element)
-    })
+    let exists = -1
+    tArray.forEach(element => {
+        if(element.tkey == msg.from.id) {
+            exists = tArray.indexOf(element)
+        }
+    });
     if(exists >= 0){
         tArray[exists] = {
             username: msg.from.username,
@@ -67,18 +68,16 @@ bot.on('/work', msg => {
     }
 
     msg.reply.text(`Hi ${msg.from.first_name}! Start your 25 minutes of Work! \n Your timer will end at: ${moment().add(25, 'minutes').calendar()} (UTC-03:00)`)
-    exists = false
 })
 
 bot.on(`/stop`, msg => {
     let stopped
     tArray.find( element => {
-        element.tkey === msg.from.id
+        element.tkey == msg.from.id
         stopped = tArray.indexOf(element)
         msg.reply.text(`${msg.from.first_name} timer stoped. Remember to keep on going!`)
     })
     tArray.pop(stopped)
-    stopped = undefined
 })
 
 bot.on('/short', msg => {
@@ -143,7 +142,6 @@ setInterval(() => {
     removeArray.forEach(element => {
         tArray.pop(element)
     })
-    removeArray = []
 },5000)
 
 bot.start()
