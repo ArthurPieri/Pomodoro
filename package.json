@@ -6,7 +6,7 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "telebot": "^1.4.1"
   },
   "devDependencies": {
